@@ -1,46 +1,44 @@
 
 import mylogo
 
-alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
-           'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
-           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
-           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 
-           'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 
-           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+
+
+def cipher(user_text, user_direction, user_shift):
+    final_word = ""
+    # determine the direction
+    if user_direction == "decode":
+        user_shift *= -1
+    for letter in user_text:
+        if letter in alphabet:
+            position = alphabet.index(letter)
+            new_position = position + user_shift
+            final_word += alphabet[new_position]
+        else:
+            final_word += letter
+    print(f"Here's the {user_direction}d {final_word}")
 
 print(mylogo.logo)
 
-# get user information
 
-direction = input("Type encode to encrypt and decode to decrypt: ").lower()
-shift = int(input("Enter the number of shifts: "))
-word = input("Enter your word: ").lower()
+respond = False
 
-#function to encrypt or decrypt
+while not respond:
+    direction = input("Type encode to encrypt and decode to decrypt: ").lower()
+    shift = int(input("Enter the number of shifts: "))
+    word = input("Enter your word: ").lower()
 
-def enc_word(shift_no, user_word):
-    new_word = ""
-    new_letter = ""
-    for letter in user_word:
-        position = alphabet.index(letter)
-        new_position = position + shift_no
-        new_letter += alphabet[new_position]
-        new_word += new_letter
-    print(f"Your word is {new_word}")
+    shift = shift % 26
 
-def dec_word(shift_no, user_word):
-    new_word = ""
-    new_letter = ""
-    for letter in user_word:
-        position = alphabet.index(letter)
-        new_position = position - shift_no
-        new_letter += alphabet[new_position]
-        new_word += new_letter
-    print(f"Your word is {new_word}")
+    cipher(user_text=word, user_direction=direction, user_shift=shift)
 
-if direction == "decode":
-    dec_word(shift_no=shift, user_word=word)
-else:
-    enc_word(shift_no=shift, user_word=word)
+    again = input("Do you want to continue, y-yes or n-no")
+
+    if again == 'n':
+        respond = True
+        print("GOODBYE")
+
+
+
+
